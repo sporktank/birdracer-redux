@@ -1,33 +1,97 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://objects/background.png" type="Texture" id=1]
-[ext_resource path="res://Background.gd" type="Script" id=2]
-[ext_resource path="res://objects/groundGrass.png" type="Texture" id=3]
-[ext_resource path="res://Ground.gd" type="Script" id=4]
-[ext_resource path="res://objects/gamefont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://game.gd" type="Script" id=1]
+[ext_resource path="res://objects/background.png" type="Texture" id=2]
+[ext_resource path="res://Background.gd" type="Script" id=3]
+[ext_resource path="res://Bird.gd" type="Script" id=4]
+[ext_resource path="res://objects/planeRed1.png" type="Texture" id=5]
+[ext_resource path="res://objects/planeRed2.png" type="Texture" id=6]
+[ext_resource path="res://objects/planeRed3.png" type="Texture" id=7]
+[ext_resource path="res://Tree.gd" type="Script" id=8]
+[ext_resource path="res://objects/treeLong.png" type="Texture" id=9]
+[ext_resource path="res://objects/gamefont.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Ground.gd" type="Script" id=11]
+[ext_resource path="res://objects/groundGrass.png" type="Texture" id=12]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "fly",
+"speed": 10.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 40.0
 
 [node name="Game" type="Node2D"]
+script = ExtResource( 1 )
 
 [node name="Background" type="Sprite" parent="."]
 position = Vector2( 1024, 299.143 )
 scale = Vector2( 1.28, 1.28 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 1600, 480 )
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
-[node name="Ground" type="Sprite" parent="."]
-position = Vector2( 0, 540 )
-texture = ExtResource( 3 )
-centered = false
-region_enabled = true
-region_rect = Rect2( 0, 0, 3232, 71 )
+[node name="Bird" type="Node2D" parent="."]
+position = Vector2( 150, 300 )
 script = ExtResource( 4 )
+
+[node name="Area2D" type="Area2D" parent="Bird"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Bird/Area2D"]
+frames = SubResource( 1 )
+animation = "fly"
+frame = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bird/Area2D"]
+position = Vector2( 0, -1.58667 )
+shape = SubResource( 2 )
+
+[node name="Tree" type="Node2D" parent="."]
+script = ExtResource( 8 )
+
+[node name="Area2D" type="Area2D" parent="Tree"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Tree/Area2D"]
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Tree/Area2D"]
+polygon = PoolVector2Array( -0.692093, -123.746, -21.2258, -109.157, -30.9523, -86.4614, -34.1945, -12.4319, -36.356, 31.3374, -26.0891, 48.0886, -13.6608, 55.6537, -6.0957, 77.2681, -6.37827, 114.565, 6.88571, 114.565, 5.79225, 61.5977, 19.8416, 50.7904, 32.27, 47.5483, 38.2139, 22.1513, 30.1085, -84.3, 23.6242, -109.697 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Title" type="Label" parent="."]
 margin_right = 1024.0
 margin_bottom = 35.0
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 10 )
 custom_colors/font_color = Color( 0.105882, 0.00784314, 0.266667, 1 )
 text = "Bird Racer Redux"
 align = 1
+
+[node name="Ground" type="Node2D" parent="."]
+position = Vector2( 0, 540 )
+script = ExtResource( 11 )
+
+[node name="Area2D" type="Area2D" parent="Ground"]
+
+[node name="Sprite" type="Sprite" parent="Ground/Area2D"]
+texture = ExtResource( 12 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 3232, 71 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ground/Area2D"]
+polygon = PoolVector2Array( 0.720552, 33.9011, 33.5745, 33.3877, 41.2747, 40.5745, 88.5023, 45.1946, 135.73, 34.9278, 157.804, 8.74724, 249.179, 2.58712, 309.753, 27.741, 347.227, 27.2276, 372.381, 12.854, 437.576, 13.3673, 468.89, 42.1146, 509.444, 45.1946, 533.058, 55.9748, 574.639, 51.8681, 597.226, 26.2009, 636.24, 24.6609, 657.8, 2.58712, 744.555, 0.533741, 764.062, 24.6609, 809.75, 36.9811, 844.144, 35.4411, 848.251, 41.0879, 896.505, 44.6813, 943.219, 33.3877, 965.293, 9.26056, 1055.13, 3.61378, 1115.19, 25.6876, 1156.26, 26.2009, 1181.92, 13.3673, 1245.07, 11.8273, 1278.95, 43.6546, 1316.93, 44.6813, 1344.65, 54.9482, 1379.56, 53.9215, 1407.28, 28.2543, 1444.76, 23.1208, 1466.83, 3.61379, 1552.56, 0.0203705, 1570.01, 24.1475, 1616.21, 34.9277, 1649.58, 33.3877, 1656.25, 40.0612, 1706.56, 45.1946, 1749.17, 33.901, 1772.78, 7.72052, 1864.67, 3.61382, 1925.76, 27.741, 1965.29, 27.741, 1986.85, 12.3407, 2054.09, 13.3673, 2084.9, 44.6813, 2125.45, 44.168, 2149.06, 54.4348, 2189.1, 54.4348, 2213.23, 27.741, 2253.78, 23.6343, 2274.83, 4.12721, 2361.59, 0.533798, 2378.01, 24.1476, 2423.7, 35.4412, 2457.07, 32.8745, 2464.77, 41.088, 2514.05, 45.708, 2560.25, 33.9011, 2580.27, 7.72061, 2673.7, 5.66724, 2730.68, 26.201, 2774.32, 27.2277, 2796.39, 11.8274, 2860.56, 12.8541, 2893.92, 42.628, 2931.4, 44.168, 2957.58, 53.9215, 2995.57, 54.4349, 3024.31, 28.2543, 3061.79, 24.1476, 3081.81, 2.58717, 3168.56, 1.0472, 3187.56, 26.201, 3231.19, 35.9545, 3231.71, 70.3486, 2458.61, 71.3753, 1926.27, 71.8887, 1381.61, 71.3753, 958.107, 70.862, 541.272, 70.862, 0.720856, 70.3486 )
+[connection signal="area_entered" from="Bird/Area2D" to="Bird" method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="Bird/Area2D" to="Bird" method="_on_Area2D_area_exited"]
+[connection signal="area_entered" from="Tree/Area2D" to="Tree" method="_on_Area2D_area_entered"]
