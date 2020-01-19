@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Tree.gd" type="Script" id=1]
+[ext_resource path="res://objects/treeLong.png" type="Texture" id=2]
+
+[node name="Tree" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Area2D"]
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( -0.692093, -123.746, -21.2258, -109.157, -30.9523, -86.4614, -34.1945, -12.4319, -36.356, 31.3374, -26.0891, 48.0886, -13.6608, 55.6537, -6.0957, 77.2681, -6.37827, 114.565, 6.88571, 114.565, 5.79225, 61.5977, 19.8416, 50.7904, 32.27, 47.5483, 38.2139, 22.1513, 30.1085, -84.3, 23.6242, -109.697 )
+__meta__ = {
+"_edit_lock_": true
+}
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
