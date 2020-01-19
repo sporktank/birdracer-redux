@@ -149,7 +149,7 @@ rect_pivot_offset = Vector2( 0, 1 )
 custom_fonts/font = ExtResource( 16 )
 custom_colors/font_color = Color( 0.105882, 0.00784314, 0.266667, 1 )
 text = "Artwork: kenney.nl
-Code: github.com/sporktank/brr"
+Code: github.com/sporktank/birdracer-redux"
 valign = 2
 
 [node name="LivesGroup" type="Node2D" parent="."]
